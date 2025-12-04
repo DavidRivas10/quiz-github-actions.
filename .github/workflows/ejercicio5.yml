@@ -31,8 +31,8 @@ jobs:
       - name: Build de la app (si existe)
         run: npm run build --if-present
 
-      - name: Subir artefacto de build
-        if: success()
+      - name: Subir artefacto de build si existe dist
+        if: success() && hashFiles('dist/**') != ''
         uses: actions/upload-artifact@v4
         with:
           name: build-${{ matrix.node-version }}
