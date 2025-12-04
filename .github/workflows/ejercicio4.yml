@@ -2,7 +2,8 @@ name: Ejercicio 4
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   test-multi-os:
