@@ -10,7 +10,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
 
     steps:
       - name: Checkout del código
@@ -25,8 +28,8 @@ jobs:
         run: npm test
 
       - name: Mostrar sistema operativo
-        run: echo "Sistema operativo: ${{ matrix.os }}"
+        run: echo "Sistema operativo: ${{ runner.os }}"
 
       - name: Solo en Linux
-        if: matrix.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: echo "Este step solo aparece en Linux"
