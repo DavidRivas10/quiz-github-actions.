@@ -6,26 +6,28 @@ on:
       - main
 
 jobs:
-  test:
-    name: Test en matriz de SO
-    runs-on: ${{ matrix.os }}
-
+  test-multi-os:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout del código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Ejecutar tests
+        run: npm test
 
       - name: Mostrar sistema operativo
         run: echo "Sistema operativo: ${{ runner.os }}"
 
-      - name: Ejecutar comando según SO
-        run: |
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            echo "Corriendo en Windows";
-          else
-            echo "Corriendo en Linux o Mac";
-          fi
-        shell: bash
+      - name: Solo en Linux
+        if: runner.os == 'Linux'
+        run: echo "Este step solo aparece en Linux"
